@@ -55,9 +55,6 @@ const handsubmit = (e) => {
 
  {posts.map((e) =><Post  author={e.name} description={e.text}/> )}
  
-
-
-   <Post author="King" description="This is a second post" />
 </div>
     </main>
 
