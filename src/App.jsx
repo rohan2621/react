@@ -6,7 +6,7 @@ import Navbar from './components/Navbar'
 import PostForm from './components/PostForm'
 import Modal from './components/Modal'
 function App() {
-  
+  const [isModalvis, setIsModalvis] = useState(false)
   const [stateData, setStateData] = useState({
       name :"",
       text : ""
@@ -18,20 +18,45 @@ const Handleform = (e) => {
     [name]:value
   }))
 }
+const handleVisi = () => {
+  setIsModalvis(false)
+  
+}
+const openModal =() => {
+  setIsModalvis(true)
+}
+
+const handsubmit = (e) => {
+  e.preventDefault();
+  const { name, value } = e.target;
+  setStateData((prevdata)=>({
+    ...prevdata,
+    [name]:value
+  }))
+  console.log(stateData);
+  handleVisi();
+  
+}
 
 
   return (
     <>
     <main className='bg-zinc-900 min-h-screen text-white'>
-      <Modal>
-<PostForm  handleChange={Handleform} />
+      {isModalvis===true ?(<Modal onChange={handleVisi}>
 
-</Modal>
-      <Navbar/>
+<PostForm handleSubmit={handsubmit}  handleChange={Handleform} />
+
+</Modal>):null}
+      <Navbar handleOpen={openModal}/>
    
 <div className='flex gap-6 mt-4 ml-9' >
  {stateData.name !== "" || stateData.text !== "" ? (
-  <Post author={stateData.name} description={stateData.text} />
+  stateData.map((e) => {
+     <Post author={e.name} description={e.text} />
+    
+  }
+  )
+ 
 ) : (
   <div></div>
 )}
