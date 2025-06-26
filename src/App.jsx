@@ -7,6 +7,7 @@ import PostForm from './components/PostForm'
 import Modal from './components/Modal'
 function App() {
   const [isModalvis, setIsModalvis] = useState(false)
+  const [posts, setPosts] = useState([])
   const [stateData, setStateData] = useState({
       name :"",
       text : ""
@@ -35,7 +36,8 @@ const handsubmit = (e) => {
   }))
   console.log(stateData);
   handleVisi();
-  
+  setPosts((prepost)=>[stateData,...prepost])
+  posts.map((e)=>{console.log(e.name);})
 }
 
 
@@ -50,16 +52,10 @@ const handsubmit = (e) => {
       <Navbar handleOpen={openModal}/>
    
 <div className='flex gap-6 mt-4 ml-9' >
- {stateData.name !== "" || stateData.text !== "" ? (
-  stateData.map((e) => {
-     <Post author={e.name} description={e.text} />
-    
-  }
-  )
+
+ {posts.map((e) =><Post  author={e.name} description={e.text}/> )}
  
-) : (
-  <div></div>
-)}
+
 
    <Post author="King" description="This is a second post" />
 </div>
