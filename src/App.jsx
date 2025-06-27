@@ -28,18 +28,20 @@ const openModal =() => {
 }
 
 const handsubmit = (e) => {
+  
   e.preventDefault();
   const { name, value } = e.target;
   setStateData((prevdata)=>({
     ...prevdata,
     [name]:value
   }))
-  console.log(stateData);
   handleVisi();
   setPosts((prepost)=>[stateData,...prepost])
-  posts.map((e)=>{console.log(e.name);})
+ fetch('http://localhost:8080/',{method:'POST',body:JSON.stringify(stateData),headers:{
+    "Content-type":"application/json"
+  }})
 }
-
+  
 
   return (
     <>
@@ -53,7 +55,7 @@ const handsubmit = (e) => {
    
 <div className='flex gap-6 mt-4 ml-9' >
 
- {posts.map((e) =><Post  author={e.name} description={e.text}/> )}
+ {posts.map((e) =><Post  author={e.name} description={e.text }/> )}
  
 
 
